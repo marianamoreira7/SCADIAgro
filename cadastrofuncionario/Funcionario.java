@@ -17,6 +17,13 @@ public class Funcionario {
         this.codFuncionario = codFuncionario;
     }
 
+    public Funcionario(int codFuncionario, String nome, String valorSalario, String dataAdmissao) {
+        this.codFuncionario = codFuncionario;
+        this.nome = nome;
+        this.valorSalario = valorSalario;
+        this.setDataAdimissao(dataAdmissao);
+    }
+
     public int getCodFuncionario() {
         return codFuncionario;
     }
@@ -49,8 +56,9 @@ public class Funcionario {
         return ChronoUnit.DAYS.between(this.dataAdimissao, dataAtual);
     }
 
-    @Override
+   @Override
     public String toString() {
         return "\n----Funcionario-----\nCodigo= "+codFuncionario+"\nNome: "+nome+"\nSalario: "+valorSalario+"\nTempo de empresa: "+tempodeEmpresa()+" dias";
     }
+
 }
