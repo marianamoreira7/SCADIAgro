@@ -1,8 +1,6 @@
 package cadastrofuncionario;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Sistema {
     public static void main(String[] args)  {
@@ -54,17 +52,8 @@ public class Sistema {
             System.out.println("------------------");
             System.out.println("Dados do Funcionario de Menor Salário: "+  funcionarios.stream().min(comparadorSalario));
 
-
-            // Exercicio 6
-            System.out.println("---------EXERCICIO 6---------");
-            funcionarios.sort((funcionario1, funcionario2) -> {Integer cod = funcionario1.getCodFuncionario(); return cod.compareTo(funcionario2.getCodFuncionario());});
-            System.out.println("Lista de funcionarios pelo codFuncionario "+ funcionarios);
-
-            System.out.println("------------------");
-            funcionarios.sort((funcionario1, funcionario2) -> {String nome = funcionario1.getNome(); return nome.compareTo(funcionario2.getNome());});
-            System.out.println("Lista de funcionarios em ordem alfabética "+ funcionarios);
-
         }
+
         entrada.close();
 
 
