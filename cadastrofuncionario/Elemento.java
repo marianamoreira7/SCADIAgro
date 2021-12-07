@@ -1,6 +1,6 @@
 package cadastrofuncionario;
 
-public class Elemento {
+public class Elemento  {
     private Elemento anterior, proximo;
     private Funcionario funcionario;
 
