@@ -5,27 +5,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class ListaEncadeada {
-    private Elemento inicio, fim;
-    Elemento elemento = inicio;
+    private Elemento inicio, fim, elemento;
 
     public ListaEncadeada() {
         inicio=fim=null;
-    }
-
-    public Elemento getInicio() {
-        return inicio;
-    }
-
-    public void setInicio(Elemento inicio) {
-        this.inicio = inicio;
-    }
-
-    public Elemento getFim() {
-        return fim;
-    }
-
-    public void setFim(Elemento fim) {
-        this.fim = fim;
     }
 
     public boolean isEmpty(){
@@ -70,16 +53,20 @@ public class ListaEncadeada {
         }
     }
     public Object removeFirst() {
+        try {
             Funcionario funcionario = inicio.getFuncionario();
             inicio = inicio.getProximo();
-            if(inicio == null) {
+            if (inicio == null) {
                 fim = null;
             } else {
                 inicio.setAnterior(null);
             }
-            System.out.println("Funcionario Removido: " + funcionario);
+            System.out.println("Funcionario Removido: \n" + funcionario +"\n");
             return funcionario;
-
+        } catch (NullPointerException e){
+            System.out.println("Não há Funcionarios para remover");
+        }
+    return null;
     }
     public Funcionario removeLast()  {
             Funcionario funcionario = fim.getFuncionario();
@@ -96,12 +83,9 @@ public class ListaEncadeada {
 
     public void limpar() {
         while (!this.isEmpty()) {
-            try {
                 this.removeFirst();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
+
         System.out.println("Limpeza realizada!");
         System.out.println();
     }
@@ -119,83 +103,99 @@ public class ListaEncadeada {
     }
 
     public void ordenarporCodFuncionario(){
+        boolean troca;
+        Funcionario auxFuncionario;
 
+        do {
+        elemento = inicio;
+        troca = false;
 
+            while (elemento.getProximo() != null) {
+                if (elemento.getFuncionario().getCodFuncionario() > elemento.getProximo().getFuncionario().getCodFuncionario()) {
+                    auxFuncionario = elemento.getFuncionario();
+                    elemento.setFuncionario(elemento.getProximo().getFuncionario());
+                    elemento.getProximo().setFuncionario(auxFuncionario);
+                    troca=true;
+                    }
+                elemento = elemento.getProximo();
+                }
+        }while (troca);
     }
 
     public void ordenarporOrdemAlfabetica(){
+        boolean troca;
+        Funcionario auxFuncionario;
 
-    }
+        do {
+            elemento = inicio;
+            troca = false;
+
+            while (elemento.getProximo() != null) {
+                if (elemento.getFuncionario().getNome().compareTo(elemento.getProximo().getFuncionario().getNome())>0) {
+                    auxFuncionario = elemento.getFuncionario();
+                    elemento.setFuncionario(elemento.getProximo().getFuncionario());
+                    elemento.getProximo().setFuncionario(auxFuncionario);
+                    troca=true;
+                }
+                elemento = elemento.getProximo();
+            }
+        }while (troca);
+        }
 
     public void infoSalario(){
         elemento = inicio;
-        double somaSalario=0;
+        double somaSalario=0, maiorSalario=0;
+        double menorSalario = Double.parseDouble(elemento.getFuncionario().getValorSalario());
 
         while (elemento != null) {
             somaSalario += Double.parseDouble(elemento.getFuncionario().getValorSalario());
+                if(Double.parseDouble(elemento.getFuncionario().getValorSalario()) > maiorSalario)
+                maiorSalario = Double.parseDouble(elemento.getFuncionario().getValorSalario());
+            if(Double.parseDouble(elemento.getFuncionario().getValorSalario()) < menorSalario)
+                menorSalario = Double.parseDouble(elemento.getFuncionario().getValorSalario());
+
             elemento = elemento.getProximo();
         }
+        System.out.println("-------Informações de Salário-------");
         System.out.printf("Soma Salarial dos funcionarios da empresa: R$ %.2f\n", somaSalario);
         System.out.printf("Média Salarial dos funcionarios da empresa: R$ %.2f\n", somaSalario/this.size());
+        System.out.printf("Maior Salário: R$ %.2f\n", maiorSalario);
+        System.out.printf("Menor Salário: R$ %.2f\n", menorSalario);
+        System.out.println("------------------");
     }
 
+
+    public void gravar(String nomeArquivo) throws IOException {
+        elemento = inicio;
+        FileWriter arquivo = new FileWriter("C:\\Users\\maria\\IdeaProjects\\SCADIAgro_ex\\src\\cadastrofuncionario\\" + nomeArquivo);
+        PrintWriter gravarArq = new PrintWriter(arquivo);
+
+        while (elemento != null) {
+            gravarArq.printf("CodFuncionario -> " + arrumarcodFuncionario(elemento.getFuncionario().getCodFuncionario()));
+            gravarArq.printf("\nNome -> " + elemento.getFuncionario().getNome());
+            gravarArq.printf("\nValorSalario -> " + elemento.getFuncionario().getValorSalario());
+            gravarArq.printf("\nDataAdmissao -> " + elemento.getFuncionario().getDataAdimissao()+"\n");
+            elemento = elemento.getProximo();
+
+        }
+        arquivo.close();
+    }
 
     public void gravarArquivo() throws IOException {
-        elemento = inicio;
-        FileWriter arquivo = new FileWriter("C:\\Users\\maria\\IdeaProjects\\SCADIAgro_ex\\src\\cadastrofuncionario\\funcionario.dat");
-        PrintWriter gravarArq = new PrintWriter(arquivo);
-
-        while (elemento != null) {
-            elemento = this.arrumarArquivo(elemento);
-            gravarArq.printf("CodFuncionario -> " + elemento.getFuncionario().getCodFuncionario());
-            gravarArq.printf("\nNome -> " + elemento.getFuncionario().getNome());
-            gravarArq.printf("\nValorSalario -> " + elemento.getFuncionario().getValorSalario());
-            gravarArq.printf("\nDataAdmissao -> " + elemento.getFuncionario().getDataAdimissao()+"\n");
-            elemento = elemento.getProximo();
-
-        }
-        arquivo.close();
-    }
-
-    public void gravarArquivocodFuncionario() throws IOException {
-        elemento = inicio;
-        FileWriter arquivo = new FileWriter("C:\\Users\\maria\\IdeaProjects\\SCADIAgro_ex\\src\\cadastrofuncionario\\funcionario_idx01.idx");
-        PrintWriter gravarArq = new PrintWriter(arquivo);
+        this.gravar("funcionario.dat");
         this.ordenarporCodFuncionario();
-        while (elemento != null) {
-            elemento = this.arrumarArquivo(elemento);
-            gravarArq.printf("CodFuncionario -> " + elemento.getFuncionario().getCodFuncionario());
-            gravarArq.printf("\nNome -> " + elemento.getFuncionario().getNome());
-            gravarArq.printf("\nValorSalario -> " + elemento.getFuncionario().getValorSalario());
-            gravarArq.printf("\nDataAdmissao -> " + elemento.getFuncionario().getDataAdimissao()+"\n");
-            elemento = elemento.getProximo();
-
-        }
-        arquivo.close();
-    }
-
-    public void gravarArquivoNome() throws IOException {
-        elemento = inicio;
-        FileWriter arquivo = new FileWriter("C:\\Users\\maria\\IdeaProjects\\SCADIAgro_ex\\src\\cadastrofuncionario\\funcionario_idx02.idx");
-        PrintWriter gravarArq = new PrintWriter(arquivo);
+        this.gravar("funcionario_idx01.idx");
         this.ordenarporOrdemAlfabetica();
-        while (elemento != null) {
-            elemento = this.arrumarArquivo(elemento);
-            gravarArq.printf("CodFuncionario -> " + elemento.getFuncionario().getCodFuncionario());
-            gravarArq.printf("\nNome -> " + elemento.getFuncionario().getNome());
-            gravarArq.printf("\nValorSalario -> " + elemento.getFuncionario().getValorSalario());
-            gravarArq.printf("\nDataAdmissao -> " + elemento.getFuncionario().getDataAdimissao()+"\n");
-            elemento = elemento.getProximo();
+        this.gravar("funcionario_idx02.idx");
 
-        }
-        arquivo.close();
     }
 
-    public Elemento arrumarArquivo(Elemento elemento){
-        String codFuncionario = ""+elemento.getFuncionario().getCodFuncionario();
-            while (codFuncionario.length()<6){
-                codFuncionario = "0" + codFuncionario;
+    public String arrumarcodFuncionario(int codFuncionario){
+        String textocodFuncionario = ""+codFuncionario;
+            while (textocodFuncionario.length()<6){
+                textocodFuncionario = "0" + textocodFuncionario;
             }
-            elemento.getFuncionario().setCodFuncionario(Integer.parseInt(codFuncionario));
-    return elemento;}
+    return textocodFuncionario;}
+
+
 }
