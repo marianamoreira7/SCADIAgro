@@ -1,6 +1,9 @@
 package cadastrofuncionario;
 
-import java.util.*;
+
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class SistemaDadosFuncionario {
     public static void main(String[] args)  {
