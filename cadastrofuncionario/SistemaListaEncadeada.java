@@ -19,65 +19,39 @@ public class SistemaListaEncadeada {
                 System.out.println("Digite o Valor do salário do funcionario: ");
                 valorSalario = scanner.next();
 
-                System.out.println("Digite a Data de admissão do funcionario dd/mm/aaaa: ");
-                dataAdimissao = scanner.next();
-
+                //System.out.println("Digite a Data de admissão do funcionario dd/mm/aaaa: ");
+                //dataAdimissao = scanner.next();
+                dataAdimissao = "12/12/2020";
                     funcionarios.addLast(new Funcionario(codFuncionario, nome, valorSalario, dataAdimissao));
 
             }while (codFuncionario!=0);
 
         System.out.println("Total de funcionarios: "+funcionarios.size());
-            do {
-                System.out.println("Selecione a opção \n" +
-                        "1->Listar Funcionarios \n" +
-                        "2->Remover algum funcionario \n" +
-                        "3->Salários: \n" +
-                        "4->Gravar Arquivo\n" +
-                        "5->Sair\"");
+
+        if (funcionarios.size()!=0){
+
+            funcionarios.infoSalario();
+
+            do {System.out.println("Selecione a opção \n" +
+                        "1->Listar Funcionarios por inserção \n" +
+                        "2->Listar Funcionarios por CodFuncionario \n" +
+                        "3->Listar Funcionarios por Ordem Alfabética \n" +
+                        "4->Remover último funcionario \n" +
+                        "5->Gravar Arquivo\n" +
+                        "6->Sair\"");
                 opcao = scanner.nextInt();
 
-                if (opcao == 1) {
-                    System.out.println("Selecione a opção \n" +
-                            "1->Listar por CodFuncionario \n" +
-                            "2->Listar por Nome \n");
-                    opcao = scanner.nextInt();
-
-                    if (opcao==1){
-                        funcionarios.ordenarporCodFuncionario();
-                    }
-                    if (opcao==2){
-                        funcionarios.ordenarporOrdemAlfabetica();
-                    }
-                        funcionarios.listar();
-
-                } else if (opcao == 2) {
-                    System.out.println("Selecione a opção \n" +
-                            "1->Remover o primeiro \n" +
-                            "2->Remover o ultimo \n");
-                    opcao = scanner.nextInt();
-
-                    if (opcao==1){
-                        funcionarios.removeFirst();
-                    }
-                    if (opcao==2){
-                        funcionarios.removeLast();
-                    }
-
-                } else if (opcao == 3) {
-                    funcionarios.infoSalario();
+                switch (opcao){
+                    case 1: funcionarios.listar(); break;
+                    case 2: funcionarios.ordenarporCodFuncionario(); funcionarios.listar(); break;
+                    case 3: funcionarios.ordenarporOrdemAlfabetica(); funcionarios.listar(); break;
+                    case 4: funcionarios.removeFirst(); break;
+                    case 5: funcionarios.gravarArquivo(); break;
+                    case 6: break;
+                    default: System.out.println("Opcão inválida"); break;
                 }
-                else if (opcao == 4) {
-                    funcionarios.gravarArquivo();
-                    funcionarios.gravarArquivocodFuncionario();
-                    funcionarios.gravarArquivoNome();
-                }
-
-                else if (opcao == 5) {
-                    break;
-                }
-                else {
-                    System.out.println("Opcao invalida");
-                }
-            }while (opcao!=5);
+                System.out.println("---------------");
+            }while (opcao!=6);
+    }
     }
 }
