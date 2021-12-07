@@ -65,6 +65,4 @@ public class Funcionario {
         return "\n----Funcionario-----\nCodigo= "+codFuncionario+"\nNome: "+nome+"\nSalario: "+valorSalario+"\nTempo de empresa: "+tempodeEmpresa()+" dias";
     }
 
-
-
 }
