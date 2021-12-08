@@ -17,11 +17,11 @@ public class SistemaListaEncadeada {
                 nome = scanner.next();
 
                 System.out.println("Digite o Valor do salário do funcionario: ");
-                valorSalario = scanner.next();
+                valorSalario = scanner.next().replace(",", ".");
 
                 //System.out.println("Digite a Data de admissão do funcionario dd/mm/aaaa: ");
                 //dataAdimissao = scanner.next();
-                dataAdimissao = "12/12/2020";
+                dataAdimissao = "12/01/2020";
                     funcionarios.addLast(new Funcionario(codFuncionario, nome, valorSalario, dataAdimissao));
 
             }while (codFuncionario!=0);
@@ -38,20 +38,22 @@ public class SistemaListaEncadeada {
                         "3->Listar Funcionarios por Ordem Alfabética \n" +
                         "4->Remover último funcionario \n" +
                         "5->Gravar Arquivo\n" +
-                        "6->Sair\"");
+                        "6->Ler Arquivo\n" +
+                        "7->Sair\"");
                 opcao = scanner.nextInt();
 
                 switch (opcao){
-                    case 1: funcionarios.listar(); break;
-                    case 2: funcionarios.ordenarporCodFuncionario(); funcionarios.listar(); break;
-                    case 3: funcionarios.ordenarporOrdemAlfabetica(); funcionarios.listar(); break;
+                    case 1: funcionarios.list(); break;
+                    case 2: funcionarios.orderbyCodFuncionario(); funcionarios.list(); break;
+                    case 3: funcionarios.orderbyNome(); funcionarios.list(); break;
                     case 4: funcionarios.removeFirst(); break;
-                    case 5: funcionarios.gravarArquivo(); break;
-                    case 6: break;
+                    case 5: funcionarios.saveFile(); break;
+                    case 6: funcionarios.readFile(); break;
+                    case 7: break;
                     default: System.out.println("Opcão inválida"); break;
                 }
                 System.out.println("---------------");
-            }while (opcao!=6);
+            }while (opcao!=7);
     }
     }
 }
