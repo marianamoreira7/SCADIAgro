@@ -1,8 +1,11 @@
 package cadastrofuncionario;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class ListaEncadeada {
     private Elemento inicio, fim, elemento;
@@ -19,7 +22,6 @@ public class ListaEncadeada {
     public int size(){
         elemento = inicio;
         int tamanho = 0;
-
         while (elemento != null) {
             tamanho++;
             elemento = elemento.getProximo();
@@ -52,7 +54,7 @@ public class ListaEncadeada {
             inicio = elemento;
         }
     }
-    public Object removeFirst() {
+    public void removeFirst() {
         try {
             Funcionario funcionario = inicio.getFuncionario();
             inicio = inicio.getProximo();
@@ -62,11 +64,9 @@ public class ListaEncadeada {
                 inicio.setAnterior(null);
             }
             System.out.println("Funcionario Removido: \n" + funcionario +"\n");
-            return funcionario;
         } catch (NullPointerException e){
             System.out.println("Não há Funcionarios para remover");
         }
-    return null;
     }
     public Funcionario removeLast()  {
             Funcionario funcionario = fim.getFuncionario();
@@ -81,7 +81,7 @@ public class ListaEncadeada {
 
     }
 
-    public void limpar() {
+    public void clean() {
         while (!this.isEmpty()) {
                 this.removeFirst();
         }
@@ -90,7 +90,7 @@ public class ListaEncadeada {
         System.out.println();
     }
 
-    public void listar() {
+    public void list() {
         elemento = inicio;
         System.out.println();
         System.out.println("-----------Lista de Funcionarios---------------");
@@ -102,7 +102,7 @@ public class ListaEncadeada {
         System.out.println();
     }
 
-    public void ordenarporCodFuncionario(){
+    public void orderbyCodFuncionario(){
         boolean troca;
         Funcionario auxFuncionario;
 
@@ -122,7 +122,7 @@ public class ListaEncadeada {
         }while (troca);
     }
 
-    public void ordenarporOrdemAlfabetica(){
+    public void orderbyNome(){
         boolean troca;
         Funcionario auxFuncionario;
 
@@ -149,10 +149,11 @@ public class ListaEncadeada {
 
         while (elemento != null) {
             somaSalario += Double.parseDouble(elemento.getFuncionario().getValorSalario());
+
                 if(Double.parseDouble(elemento.getFuncionario().getValorSalario()) > maiorSalario)
-                maiorSalario = Double.parseDouble(elemento.getFuncionario().getValorSalario());
-            if(Double.parseDouble(elemento.getFuncionario().getValorSalario()) < menorSalario)
-                menorSalario = Double.parseDouble(elemento.getFuncionario().getValorSalario());
+                    maiorSalario = Double.parseDouble(elemento.getFuncionario().getValorSalario());
+                if(Double.parseDouble(elemento.getFuncionario().getValorSalario()) < menorSalario)
+                    menorSalario = Double.parseDouble(elemento.getFuncionario().getValorSalario());
 
             elemento = elemento.getProximo();
         }
@@ -165,15 +166,15 @@ public class ListaEncadeada {
     }
 
 
-    public void gravar(String nomeArquivo) throws IOException {
+    public void createFile(String nomeArquivo) throws IOException {
         elemento = inicio;
         FileWriter arquivo = new FileWriter("C:\\Users\\maria\\IdeaProjects\\SCADIAgro_ex\\src\\cadastrofuncionario\\" + nomeArquivo);
         PrintWriter gravarArq = new PrintWriter(arquivo);
 
         while (elemento != null) {
-            gravarArq.printf("CodFuncionario -> " + arrumarcodFuncionario(elemento.getFuncionario().getCodFuncionario()));
-            gravarArq.printf("\nNome -> " + elemento.getFuncionario().getNome());
-            gravarArq.printf("\nValorSalario -> " + elemento.getFuncionario().getValorSalario());
+            gravarArq.printf("CodFuncionario -> " + arrumarCodFuncionario(elemento.getFuncionario().getCodFuncionario()));
+            gravarArq.printf("\nNome -> " + arrumarNomeFuncionario(elemento.getFuncionario().getNome()));
+            gravarArq.printf("\nValorSalario -> " + arrumarValorSalario(elemento.getFuncionario().getValorSalario()));
             gravarArq.printf("\nDataAdmissao -> " + elemento.getFuncionario().getDataAdimissao()+"\n");
             elemento = elemento.getProximo();
 
@@ -181,21 +182,43 @@ public class ListaEncadeada {
         arquivo.close();
     }
 
-    public void gravarArquivo() throws IOException {
-        this.gravar("funcionario.dat");
-        this.ordenarporCodFuncionario();
-        this.gravar("funcionario_idx01.idx");
-        this.ordenarporOrdemAlfabetica();
-        this.gravar("funcionario_idx02.idx");
+    public void readFile() throws FileNotFoundException {
+        Scanner in = new Scanner(new FileReader("C:\\Users\\maria\\IdeaProjects\\SCADIAgro_ex\\src\\cadastrofuncionario\\funcionario.dat"));
+        while (in.hasNextLine()) {
+            String line = in.nextLine();
+            //System.out.println(line);
+        }
+    }
+
+
+    
+    public void saveFile() throws IOException {
+        this.createFile("funcionario.dat");
+        this.orderbyCodFuncionario();
+        this.createFile("funcionario_idx01.idx");
+        this.orderbyNome();
+        this.createFile("funcionario_idx02.idx");
 
     }
 
-    public String arrumarcodFuncionario(int codFuncionario){
+    public String arrumarCodFuncionario(int codFuncionario){
         String textocodFuncionario = ""+codFuncionario;
             while (textocodFuncionario.length()<6){
-                textocodFuncionario = "0" + textocodFuncionario;
+                textocodFuncionario = '0' + textocodFuncionario;
             }
     return textocodFuncionario;}
+
+    public String arrumarNomeFuncionario(String nomeFuncionario){
+        while (nomeFuncionario.length()<100){
+            nomeFuncionario = '0' + nomeFuncionario;
+        }
+        return nomeFuncionario;}
+
+    public String arrumarValorSalario(String valorSalario){
+        while (valorSalario.length()<16){
+            valorSalario = '0' + valorSalario;
+        }
+        return valorSalario;}
 
 
 }
