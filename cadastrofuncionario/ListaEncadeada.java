@@ -182,16 +182,7 @@ public class ListaEncadeada {
         arquivo.close();
     }
 
-    public void readFile() throws FileNotFoundException {
-        Scanner in = new Scanner(new FileReader("C:\\Users\\maria\\IdeaProjects\\SCADIAgro_ex\\src\\cadastrofuncionario\\funcionario.dat"));
-        while (in.hasNextLine()) {
-            String line = in.nextLine();
-            //System.out.println(line);
-        }
-    }
 
-
-    
     public void saveFile() throws IOException {
         this.createFile("funcionario.dat");
         this.orderbyCodFuncionario();
@@ -200,6 +191,59 @@ public class ListaEncadeada {
         this.createFile("funcionario_idx02.idx");
 
     }
+
+    public void readFile() throws FileNotFoundException {
+        Scanner in = new Scanner(new FileReader("C:\\Users\\maria\\IdeaProjects\\SCADIAgro_ex\\src\\cadastrofuncionario\\funcionario.dat"));
+        this.addbyArq(in);
+    }
+
+    public void addbyArq(Scanner in) {
+        int contLine=0;
+        String nomeFuncionario = null, valorSalario = null, dataAdmissao = null;
+        int codFuncionario = 0;
+
+        while (in.hasNextLine()) {
+        String line = in.nextLine();
+        contLine++;
+        if (line.startsWith("CodFuncionario -> ")) {
+            int indice = 18;
+            while (line.charAt(indice) == '0') {
+                indice++;
+            }
+            codFuncionario = Integer.parseInt(line.substring(indice));
+        }
+        if (line.startsWith("Nome -> ")) {
+            int indice = 8;
+            while (line.charAt(indice) == '0') {
+                indice++;
+            }
+            nomeFuncionario = line.substring(indice);
+
+        }
+        if (line.startsWith("ValorSalario -> ")) {
+            int indice = 16;
+            while (line.charAt(indice) == '0') {
+                indice++;
+            }
+            valorSalario = line.substring(indice);
+
+        }
+        if (line.startsWith("DataAdmissao -> ")) {
+            String dia,mes,ano;
+            dataAdmissao = line.substring(16);
+            ano = dataAdmissao.substring(0,4);
+            mes = dataAdmissao.substring(5,7);
+            dia = dataAdmissao.substring(8,10);
+            dataAdmissao = dia+"/"+mes+"/"+ano;
+           }
+
+        if(contLine%4==0){
+            this.addLast(new Funcionario(codFuncionario, nomeFuncionario, valorSalario, dataAdmissao));
+        }
+
+    }
+    }
+
 
     public String arrumarCodFuncionario(int codFuncionario){
         String textocodFuncionario = ""+codFuncionario;
