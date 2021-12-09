@@ -19,9 +19,9 @@ public class SistemaListaEncadeada {
                 System.out.println("Digite o Valor do salário do funcionario: ");
                 valorSalario = scanner.next().replace(",", ".");
 
-                System.out.println("Digite a Data de admissão do funcionario dd/mm/aaaa: ");
-                dataAdimissao = scanner.next();
-                
+                //System.out.println("Digite a Data de admissão do funcionario dd/mm/aaaa: ");
+                //dataAdimissao = scanner.next();
+                dataAdimissao = "12/01/2020";
                     funcionarios.addLast(new Funcionario(codFuncionario, nome, valorSalario, dataAdimissao));
 
             }while (codFuncionario!=0);
@@ -39,7 +39,7 @@ public class SistemaListaEncadeada {
                         "4->Remover último funcionario \n" +
                         "5->Gravar Arquivo\n" +
                         "6->Ler Arquivo\n" +
-                        "7->Sair\"");
+                        "7->Sair\n");
                 opcao = scanner.nextInt();
 
                 switch (opcao){
