@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="430.0" prefWidth="574.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddFuncionarioController">
+    <children>
+        <BorderPane prefHeight="430.0" prefWidth="574.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <left>
+                <Pane fx:id="contentArea" BorderPane.alignment="CENTER">
+                    <children>
+                        <AnchorPane layoutX="89.0" layoutY="113.0" prefHeight="312.0" prefWidth="466.0" style="-fx-background-color: #3CB371;">
+                            <children>
+                                <Button fx:id="btnCadastro" layoutX="265.0" layoutY="228.0" mnemonicParsing="false" onAction="#cadastrarFuncionario" prefHeight="42.0" prefWidth="154.0" text="Cadastrar" />
+                            </children>
+                        </AnchorPane>
+                        <Text layoutX="118.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código:" wrappingWidth="66.98307228088379" />
+                        <TextField fx:id="codFuncionario" layoutX="186.0" layoutY="167.0" prefHeight="26.0" prefWidth="84.0" promptText="0000" />
+                        <Text layoutX="119.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" wrappingWidth="66.98307228088379" />
+                        <TextField fx:id="nome" layoutX="187.0" layoutY="211.0" prefHeight="26.0" prefWidth="317.0" />
+                        <Text layoutX="119.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salário:" wrappingWidth="66.98307228088379" />
+                        <TextField fx:id="valorSalario" layoutX="187.0" layoutY="255.0" prefHeight="26.0" prefWidth="86.0" promptText="000,00" />
+                        <Text layoutX="120.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data de admissão:" wrappingWidth="61.98307228088379" />
+                        <TextField fx:id="dataAdmissao" layoutX="187.0" layoutY="300.0" prefHeight="26.0" prefWidth="88.0" promptText="00/00/0000" />
+                    </children>
+                </Pane>
+            </left></BorderPane>
+    </children>
+</AnchorPane>
